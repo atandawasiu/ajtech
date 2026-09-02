@@ -1,0 +1,11 @@
+{
+  "buildCommand": "pnpm --filter @workspace/ajtech run build",
+  "outputDirectory": "artifacts/ajtech/dist/public",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/((?!api(?:/|$)).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
