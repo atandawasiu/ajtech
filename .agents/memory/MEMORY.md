@@ -1,0 +1,1 @@
+- [External hosting architecture](hosting-architecture.md) — separate Vite hosting needs an explicit API URL, matching CORS, and secure cross-site cookies.
