@@ -8,7 +8,10 @@ function SkeletonProject() {
 }
 
 export default function Home() {
-  const { data: projects, isLoading, isError } = useListProjects({ featured: true });
+  const { data: projectsResponse, isLoading, isError } = useListProjects({ featured: true });
+  const projects = Array.isArray(projectsResponse)
+    ? projectsResponse
+    : ((projectsResponse as { data?: typeof projectsResponse } | undefined)?.data ?? []);
 
   return (
     <div className="overflow-hidden">
