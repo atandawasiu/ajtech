@@ -25,7 +25,7 @@ const formSchema = z.object({
   excerpt: z.string().optional(),
   content: z.string().min(1, "Content is required"),
   coverImageUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
-  tags: z.string().transform(str => str.split(',').map(s => s.trim()).filter(Boolean)),
+  tags: z.string(),
   published: z.boolean().default(false),
   readTime: z.coerce.number().optional(),
 });
@@ -56,7 +56,7 @@ export default function AdminBlogForm() {
       excerpt: "",
       content: "",
       coverImageUrl: "",
-      tags: [],
+      tags: "",
       published: false,
       readTime: 5,
     }
@@ -70,15 +70,15 @@ export default function AdminBlogForm() {
         excerpt: post.excerpt || "",
         coverImageUrl: post.coverImageUrl || "",
         readTime: post.readTime || 5,
-        tags: post.tags as unknown as any,
+        tags: post.tags.join(", "),
       });
-      form.setValue('tags', post.tags.join(', ') as any);
     }
   }, [post, isEdit, form]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const payload = {
       ...values,
+      tags: values.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
       slug: values.slug || undefined,
       excerpt: values.excerpt || undefined,
       coverImageUrl: values.coverImageUrl || undefined,

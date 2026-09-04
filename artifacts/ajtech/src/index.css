@@ -88,6 +88,42 @@
     --app-font-mono: 'DM Mono', ui-monospace, monospace;
   }
 
+  .light {
+    --background: 225 33% 97%;
+    --foreground: 230 30% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 230 30% 12%;
+    --card-border: 224 22% 88%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 230 30% 12%;
+    --popover-border: 224 22% 86%;
+    --primary: 217 87% 51%;
+    --primary-foreground: 0 0% 100%;
+    --primary-border: rgba(37, 99, 235, .3);
+    --secondary: 224 28% 93%;
+    --secondary-foreground: 230 28% 17%;
+    --secondary-border: 224 22% 86%;
+    --muted: 224 25% 94%;
+    --muted-foreground: 225 13% 40%;
+    --muted-border: 224 22% 86%;
+    --accent: 263 74% 56%;
+    --accent-foreground: 0 0% 100%;
+    --accent-border: rgba(124, 58, 237, .25);
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 224 22% 86%;
+    --input: 224 22% 80%;
+    --ring: 217 87% 51%;
+    --sidebar: 225 33% 98%;
+    --sidebar-foreground: 230 30% 12%;
+    --sidebar-border: 224 22% 86%;
+    --sidebar-primary: 217 87% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 224 28% 93%;
+    --sidebar-accent-foreground: 230 28% 17%;
+    --sidebar-ring: 217 87% 51%;
+  }
+
   * { @apply border-border; }
   html { font-feature-settings: "ss01", "cv02"; scroll-behavior: smooth; }
   body { @apply font-sans antialiased bg-background text-foreground; min-width: 320px; }
@@ -118,6 +154,57 @@
 .blue-gradient { background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); }
 .admin-shell { background: radial-gradient(circle at 78% -18%, rgba(112,82,255,.14), transparent 28%), hsl(var(--background)); }
 .admin-shell::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .3; background: linear-gradient(115deg, transparent 55%, rgba(93,123,255,.05)); }
+
+/* The public and admin shells contain a few intentionally art-directed dark
+   utility classes. These overrides keep those surfaces readable in light mode
+   without changing the cinematic dark theme. */
+.light .site-shell,
+.light .admin-shell { color-scheme: light; }
+.light .site-shell::before {
+  opacity: .65;
+  background-image: linear-gradient(rgba(55, 91, 170, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(55, 91, 170, .06) 1px, transparent 1px);
+}
+.light .site-shell::after { opacity: .018; }
+.light .site-shell .orb { mix-blend-mode: multiply; opacity: .13; }
+.light .site-shell header,
+.light .admin-shell header {
+  background: rgba(255, 255, 255, .84);
+  border-color: hsl(var(--border) / .85);
+}
+.light .site-shell footer,
+.light .admin-shell aside {
+  background: rgba(248, 250, 255, .94);
+  border-color: hsl(var(--border) / .9);
+}
+.light .glass-panel {
+  background: linear-gradient(135deg, rgba(255,255,255,.94), rgba(244,247,255,.86));
+  border-color: hsl(var(--border));
+  box-shadow: 0 24px 70px rgba(57, 77, 130, .12), inset 0 1px rgba(255,255,255,.9);
+}
+.light .text-gradient {
+  background: linear-gradient(105deg, #18356f 16%, #1d66cf 54%, #713bc1 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.light .site-shell [class*="border-white"],
+.light .admin-shell [class*="border-white"] { border-color: hsl(var(--border)) !important; }
+.light .site-shell [class*="bg-white/"],
+.light .admin-shell [class*="bg-white/"] { background-color: hsl(var(--card) / .78) !important; }
+.light .site-shell [class*="bg-[#"],
+.light .admin-shell [class*="bg-[#"] { background-color: hsl(var(--card)) !important; }
+.light .site-shell [class*="text-slate-100"],
+.light .admin-shell [class*="text-slate-100"],
+.light .site-shell [class*="text-slate-200"],
+.light .admin-shell [class*="text-slate-200"],
+.light .site-shell [class*="text-slate-300"],
+.light .admin-shell [class*="text-slate-300"] { color: hsl(var(--foreground)) !important; }
+.light .site-shell [class*="text-slate-400"],
+.light .admin-shell [class*="text-slate-400"],
+.light .site-shell [class*="text-slate-500"],
+.light .admin-shell [class*="text-slate-500"],
+.light .site-shell [class*="text-slate-600"],
+.light .admin-shell [class*="text-slate-600"] { color: hsl(var(--muted-foreground)) !important; }
+.light .admin-shell::before { opacity: .45; }
 
 @keyframes drift { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(16px, -18px, 0) scale(1.04); } }
 @keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-10px) rotate(2deg); } }

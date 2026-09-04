@@ -4,6 +4,7 @@ import { LayoutDashboard, FolderGit2, FileText, MessageSquare, Settings, LogOut,
 import { useAdminLogout } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTheme } from "@/components/theme-provider";
+import { useToast } from "@/hooks/use-toast";
 
 const navItems = [
   { href: "/admin/dashboard", icon: LayoutDashboard, label: "Overview" },
@@ -16,8 +17,18 @@ const navItems = [
 
 function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const { toast } = useToast();
   const isDark = theme === "dark";
-  return <button type="button" data-testid="button-admin-theme" onClick={() => setTheme(isDark ? "light" : "dark")} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-xs text-slate-500 transition-colors hover:bg-white/[.05] hover:text-slate-200">{isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}{isDark ? "Light theme" : "Dark theme"}</button>;
+  const nextTheme = isDark ? "light" : "dark";
+  const handleToggle = () => {
+    setTheme(nextTheme);
+    toast({
+      title: `${nextTheme === "light" ? "Light" : "Dark"} theme enabled`,
+      description: "Your preference will be remembered on this device.",
+      duration: 2200,
+    });
+  };
+  return <button type="button" data-testid="button-admin-theme" onClick={handleToggle} aria-pressed={isDark} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-xs text-slate-500 transition-colors hover:bg-white/[.05] hover:text-slate-200">{isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}{isDark ? "Light theme" : "Dark theme"}</button>;
 }
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
@@ -25,11 +36,19 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const logout = useAdminLogout();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
   const isLoginPage = location === "/admin/login";
   const currentNav = navItems.find((item) => location === item.href || location.startsWith(`${item.href}/`));
-  const handleLogout = () => logout.mutate(undefined, { onSuccess: () => { queryClient.clear(); setLocation("/admin/login"); } });
+  const handleLogout = () => logout.mutate(undefined, {
+    onSuccess: () => {
+      queryClient.clear();
+      toast({ title: "Signed out", description: "Your admin session has ended." });
+      setLocation("/admin/login");
+    },
+    onError: () => toast({ variant: "destructive", title: "Sign out failed", description: "Please try again." }),
+  });
 
-  if (isLoginPage) return <div className="dark min-h-[100dvh]">{children}</div>;
+  if (isLoginPage) return <div className="min-h-[100dvh] bg-background text-foreground">{children}</div>;
 
   const Sidebar = ({ mobile = false }: { mobile?: boolean }) => (
     <aside className={`${mobile ? "fixed inset-y-0 left-0 z-50 w-72 shadow-2xl" : "hidden w-64 shrink-0 lg:flex"} flex-col border-r border-white/[.08] bg-[#0b0d19]`}>

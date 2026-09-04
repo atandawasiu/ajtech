@@ -19,7 +19,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 
 export default function AdminBlog() {
-  const { data: posts, isLoading } = useListBlogPosts();
+  const { data: posts, isLoading, isError } = useListBlogPosts();
   const deletePost = useDeleteBlogPost();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -65,6 +65,12 @@ export default function AdminBlog() {
               <TableRow>
                 <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
                   Loading posts...
+                </TableCell>
+              </TableRow>
+            ) : isError ? (
+              <TableRow>
+                <TableCell colSpan={4} className="py-10 text-center text-destructive">
+                  Journal posts could not be loaded. Refresh and try again.
                 </TableCell>
               </TableRow>
             ) : posts && posts.length > 0 ? (

@@ -3,7 +3,7 @@ import { useListServices } from "@workspace/api-client-react";
 import { Code2, Server, Smartphone, Layout, Database, CheckCircle2 } from "lucide-react";
 
 export default function Services() {
-  const { data: services, isLoading } = useListServices();
+  const { data: services, isLoading, isError } = useListServices();
 
   const getIcon = (iconName: string) => {
     switch (iconName.toLowerCase()) {
@@ -37,6 +37,10 @@ export default function Services() {
             {[1, 2, 3, 4].map(i => (
               <div key={i} className="rounded-xl border border-border bg-card p-8 h-80 animate-pulse" />
             ))}
+          </div>
+        ) : isError ? (
+          <div className="text-center py-20 border border-red-300/30 rounded-xl bg-red-400/[.04]">
+            <p className="text-muted-foreground">Services are temporarily unavailable. Please refresh and try again.</p>
           </div>
         ) : services && services.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">

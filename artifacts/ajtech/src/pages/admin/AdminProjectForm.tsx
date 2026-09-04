@@ -24,7 +24,7 @@ const formSchema = z.object({
   description: z.string().min(1, "Description is required"),
   longDescription: z.string().optional(),
   imageUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
-  tags: z.string().transform(str => str.split(',').map(s => s.trim()).filter(Boolean)),
+  tags: z.string(),
   category: z.string().min(1, "Category is required"),
   liveUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
   githubUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
@@ -57,7 +57,7 @@ export default function AdminProjectForm() {
       description: "",
       longDescription: "",
       imageUrl: "",
-      tags: [],
+      tags: "",
       category: "",
       liveUrl: "",
       githubUrl: "",
@@ -74,16 +74,15 @@ export default function AdminProjectForm() {
         imageUrl: project.imageUrl || "",
         liveUrl: project.liveUrl || "",
         githubUrl: project.githubUrl || "",
-        tags: project.tags as unknown as any, // Handled by transform, but initial value needs to be string
+        tags: project.tags.join(", "),
       });
-      // Workaround for tags since they come as array but form expects string
-      form.setValue('tags', project.tags.join(', ') as any);
     }
   }, [project, isEdit, form]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const payload = {
       ...values,
+      tags: values.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
       longDescription: values.longDescription || undefined,
       imageUrl: values.imageUrl || undefined,
       liveUrl: values.liveUrl || undefined,

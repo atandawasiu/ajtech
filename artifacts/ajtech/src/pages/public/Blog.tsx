@@ -4,7 +4,7 @@ import { useListBlogPosts } from "@workspace/api-client-react";
 import { Calendar, Clock, ChevronRight } from "lucide-react";
 
 export default function Blog() {
-  const { data: posts, isLoading } = useListBlogPosts({ published: true });
+  const { data: posts, isLoading, isError } = useListBlogPosts({ published: true });
 
   return (
     <div className="site-shell flex flex-col w-full min-h-screen pt-20">
@@ -27,6 +27,10 @@ export default function Blog() {
             {[1, 2, 3].map(i => (
               <div key={i} className="rounded-xl border border-border bg-card p-8 h-48 animate-pulse" />
             ))}
+          </div>
+        ) : isError ? (
+          <div className="text-center py-20 border border-red-300/30 rounded-xl bg-red-400/[.04]">
+            <p className="text-muted-foreground">The journal is temporarily unavailable. Please refresh and try again.</p>
           </div>
         ) : posts && posts.length > 0 ? (
           <div className="space-y-12 max-w-4xl">

@@ -31,6 +31,11 @@ export default function AdminLogin() {
       },
       onError: () => {
         form.setError("password", { message: "Incorrect password" });
+        toast({
+          variant: "destructive",
+          title: "Sign in failed",
+          description: "Check your password and try again.",
+        });
       }
     });
   };

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import { useToast } from "@/hooks/use-toast";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -13,13 +14,26 @@ const navLinks = [
 
 function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const { toast } = useToast();
   const isDark = theme === "dark";
+  const nextTheme = isDark ? "light" : "dark";
+
+  const handleToggle = () => {
+    setTheme(nextTheme);
+    toast({
+      title: `${nextTheme === "light" ? "Light" : "Dark"} theme enabled`,
+      description: "Your preference will be remembered on this device.",
+      duration: 2200,
+    });
+  };
+
   return (
     <button
       type="button"
       data-testid="button-toggle-theme"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={handleToggle}
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-pressed={isDark}
       className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/[.04] text-slate-400 transition-colors hover:border-primary/50 hover:text-white"
     >
       {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -68,7 +82,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
 
           <div className="flex items-center gap-2 md:hidden">
             <ThemeToggle />
-            <button type="button" data-testid="button-toggle-menu" onClick={() => setOpen((value) => !value)} aria-label={open ? "Close navigation" : "Open navigation"} className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-slate-300">
+              <button type="button" data-testid="button-toggle-menu" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? "Close navigation" : "Open navigation"} className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-slate-300">
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
           </div>

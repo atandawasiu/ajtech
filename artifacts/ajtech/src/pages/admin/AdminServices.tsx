@@ -77,7 +77,7 @@ function DeleteDialog({ id, title, onClose }: { id: string; title: string; onClo
 }
 
 export default function AdminServices() {
-  const { data: services, isLoading } = useListServices();
+  const { data: services, isLoading, isError } = useListServices();
   const [deletingId, setDeletingId] = useState<{ id: string; title: string } | null>(null);
 
   return (
@@ -95,6 +95,12 @@ export default function AdminServices() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[1, 2, 3].map(i => <div key={i} className="h-40 rounded-xl border border-border bg-card animate-pulse" />)}
+        </div>
+      ) : isError ? (
+        <div className="text-center py-20 rounded-xl border border-dashed border-destructive/40 bg-destructive/5">
+          <Code2 className="w-10 h-10 text-destructive/50 mx-auto mb-3" />
+          <h3 className="font-semibold mb-1">Services could not be loaded</h3>
+          <p className="text-sm text-muted-foreground">Refresh the page and try again.</p>
         </div>
       ) : services && services.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

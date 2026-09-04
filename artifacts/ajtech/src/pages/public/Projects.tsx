@@ -5,12 +5,14 @@ import { useListProjects } from "@workspace/api-client-react";
 import { Code2, ArrowRight, Filter, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
   
-  const { data: projects, isLoading } = useListProjects({});
+  const { data: projects, isLoading, isError } = useListProjects({});
+  const { toast } = useToast();
 
   const categories = ["All", ...Array.from(new Set(projects?.map(p => p.category) || []))];
 
@@ -46,7 +48,13 @@ export default function Projects() {
                 key={category}
                 variant={activeCategory === category ? "default" : "outline"}
                 size="sm"
-                onClick={() => setActiveCategory(category)}
+                 onClick={() => {
+                   setActiveCategory(category);
+                   toast({
+                     title: category === "All" ? "Showing all projects" : `Filtered by ${category}`,
+                     duration: 1800,
+                   });
+                 }}
                 className={`rounded-full px-6 ${activeCategory === category ? "shadow-[0_0_15px_-5px_rgba(var(--primary))]" : ""}`}
               >
                 {category}
@@ -71,6 +79,11 @@ export default function Projects() {
             {[1, 2, 3, 4, 5, 6].map(i => (
               <div key={i} className="rounded-xl border border-border bg-card p-1 h-[400px] animate-pulse" />
             ))}
+          </div>
+        ) : isError ? (
+          <div className="text-center py-32 border border-red-300/30 rounded-xl bg-red-400/[.04]">
+            <h3 className="text-xl font-bold mb-2">Work is temporarily unavailable</h3>
+            <p className="text-muted-foreground">Please refresh the page and try again.</p>
           </div>
         ) : filteredProjects && filteredProjects.length > 0 ? (
           <motion.div 
@@ -141,7 +154,11 @@ export default function Projects() {
             <Button 
               variant="outline" 
               className="mt-6"
-              onClick={() => { setActiveCategory("All"); setSearchQuery(""); }}
+               onClick={() => {
+                 setActiveCategory("All");
+                 setSearchQuery("");
+                 toast({ title: "Filters cleared", description: "Showing the full project archive.", duration: 1800 });
+               }}
             >
               Clear filters
             </Button>

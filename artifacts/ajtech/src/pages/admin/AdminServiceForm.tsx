@@ -128,10 +128,8 @@ export default function AdminServiceForm() {
     <div className="max-w-2xl space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <Link href="/admin/services">
-          <button className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="w-4 h-4" />
-          </button>
+        <Link href="/admin/services" aria-label="Back to services" className="inline-flex p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground">
+          <ArrowLeft className="w-4 h-4" />
         </Link>
         <div>
           <h2 className="text-xl font-bold tracking-tight">{isEdit ? "Edit Service" : "New Service"}</h2>

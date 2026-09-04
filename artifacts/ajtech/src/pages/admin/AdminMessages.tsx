@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 
 export default function AdminMessages() {
-  const { data: messages, isLoading } = useListMessages();
+  const { data: messages, isLoading, isError } = useListMessages();
   const markRead = useMarkMessageRead();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -27,7 +27,12 @@ export default function AdminMessages() {
         queryClient.invalidateQueries({ queryKey: getListMessagesQueryKey() });
         queryClient.invalidateQueries({ queryKey: getGetAdminStatsQueryKey() });
         toast({ title: "Marked as read" });
-      }
+      },
+      onError: () => toast({
+        variant: "destructive",
+        title: "Couldn't mark as read",
+        description: "Please try again.",
+      }),
     });
   };
 
@@ -48,6 +53,10 @@ export default function AdminMessages() {
       <div className="rounded-xl border border-border bg-card overflow-hidden">
         {isLoading ? (
           <div className="p-8 text-center text-muted-foreground">Loading messages...</div>
+        ) : isError ? (
+          <div className="p-10 text-center text-destructive">
+            Messages could not be loaded. Refresh and try again.
+          </div>
         ) : messages && messages.length > 0 ? (
           <div className="divide-y divide-border">
             {messages.map((msg) => (

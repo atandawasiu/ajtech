@@ -19,7 +19,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 
 export default function AdminProjects() {
-  const { data: projects, isLoading } = useListProjects();
+  const { data: projects, isLoading, isError } = useListProjects();
   const deleteProject = useDeleteProject();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -69,6 +69,12 @@ export default function AdminProjects() {
               <TableRow>
                 <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
                   Loading projects...
+                </TableCell>
+              </TableRow>
+            ) : isError ? (
+              <TableRow>
+                <TableCell colSpan={4} className="py-10 text-center text-destructive">
+                  Projects could not be loaded. Refresh and try again.
                 </TableCell>
               </TableRow>
             ) : projects && projects.length > 0 ? (
