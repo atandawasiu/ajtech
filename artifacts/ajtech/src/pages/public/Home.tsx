@@ -28,7 +28,7 @@ export default function Home() {
               Complex ideas.<br /><span className="text-gradient">Clear signal.</span>
             </motion.h1>
             <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .16 }} className="mt-8 max-w-xl text-base leading-7 text-slate-400 md:text-lg">
-              AJTech turns ambitious product ideas into polished, dependable digital experiences — from first system map to the last meaningful pixel.
+              ajTech turns ambitious product ideas into polished, dependable digital experiences — from first system map to the last meaningful pixel.
             </motion.p>
             <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .24 }} className="mt-10 flex flex-wrap items-center gap-4">
               <Link href="/projects" data-testid="link-hero-work" className="group flex items-center gap-3 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-[#090a16] transition-transform hover:-translate-y-0.5">

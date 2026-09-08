@@ -67,7 +67,7 @@ export default function AdminLogin() {
           </div>
           <p className="eyebrow mb-3">Private workspace</p>
           <h1 className="text-3xl font-bold tracking-tight mb-1.5 text-slate-100">Admin Access</h1>
-          <p className="text-muted-foreground text-sm">Enter your password to manage the AJTech studio.</p>
+          <p className="text-muted-foreground text-sm">Enter your password to manage the ajTech studio.</p>
         </div>
 
         {/* Card */}
