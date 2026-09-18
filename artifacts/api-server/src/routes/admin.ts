@@ -48,7 +48,8 @@ router.post("/admin/login", async (req, res): Promise<void> => {
     return;
   }
 
-  if (!ADMIN_PASSWORD || parsed.data.password !== ADMIN_PASSWORD) {
+  const submittedPassword = parsed.data.password;
+  if (!ADMIN_PASSWORD || submittedPassword !== ADMIN_PASSWORD) {
     res.status(401).json({ error: "Invalid password" });
     return;
   }
