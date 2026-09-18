@@ -51,11 +51,8 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       <div className="orb orb-violet animate-drift right-[-12rem] top-[34rem] z-[-2] h-[34rem] w-[34rem] opacity-20" />
       <header className="sticky top-0 z-40 border-b border-white/[.08] bg-[#090a16]/75 backdrop-blur-xl">
         <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-5 md:px-8">
-          <Link href="/" data-testid="link-brand-home" className="group flex items-center gap-3">
-            <span className="relative flex size-9 items-center justify-center overflow-hidden rounded-lg border border-primary/40 bg-primary/10 shadow-[0_0_24px_rgba(104,167,255,.18)]">
-              <img src="/ajtech-logo-transparent.png" alt="" aria-hidden="true" className="size-full object-contain" />
-            </span>
-            <span className="font-semibold tracking-[-.04em] text-slate-100">aj<span className="text-primary">Tech</span><span className="ml-1 font-mono text-[10px] font-normal tracking-[.12em] text-slate-500">/STUDIO</span></span>
+          <Link href="/" data-testid="link-brand-home" className="group font-semibold tracking-[-.04em] text-slate-100">
+            aj<span className="text-primary">Tech</span>
           </Link>
 
           <nav aria-label="Primary navigation" className="hidden items-center gap-8 md:flex">
@@ -114,7 +111,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
           <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
             <div>
-              <Link href="/" data-testid="link-footer-brand" className="font-semibold tracking-[-.04em] text-slate-100">aj<span className="text-primary">Tech</span><span className="ml-1 font-mono text-[10px] tracking-[.12em] text-slate-500">/STUDIO</span></Link>
+              <Link href="/" data-testid="link-footer-brand" className="font-semibold tracking-[-.04em] text-slate-100">aj<span className="text-primary">Tech</span></Link>
               <p className="mt-5 max-w-xs text-sm leading-7 text-slate-500">A personal brand and boutique engineering studio for ambitious digital products.</p>
               <p className="mt-8 font-mono text-[10px] uppercase tracking-[.16em] text-slate-600">Lagos · Remote · Worldwide</p>
             </div>

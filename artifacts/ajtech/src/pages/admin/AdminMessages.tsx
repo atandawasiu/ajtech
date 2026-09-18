@@ -1,6 +1,6 @@
 import { useListMessages, useMarkMessageRead, getListMessagesQueryKey, getGetAdminStatsQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Mail, MailOpen, Calendar, User, Search } from "lucide-react";
+import { Mail, MailOpen, Calendar, Search, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -19,6 +19,15 @@ export default function AdminMessages() {
   const { toast } = useToast();
   
   const [selectedMessage, setSelectedMessage] = useState<any | null>(null);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState<"all" | "unread">("all");
+
+  const visibleMessages = (messages ?? []).filter((message) => {
+    const query = search.trim().toLowerCase();
+    const matchesSearch = !query || [message.name, message.email, message.subject, message.body]
+      .some((value) => value?.toLowerCase().includes(query));
+    return matchesSearch && (filter === "all" || !message.read);
+  });
 
   const handleMarkRead = (id: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -45,9 +54,21 @@ export default function AdminMessages() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold tracking-tight mb-2">Messages</h2>
-        <p className="text-muted-foreground">Inquiries from the contact form.</p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight mb-2">Messages</h2>
+          <p className="text-muted-foreground">Inquiries from the contact form.</p>
+        </div>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <label className="flex min-w-0 items-center gap-2 rounded-md border border-input bg-background px-3 focus-within:ring-2 focus-within:ring-ring">
+            <Search className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+            <span className="sr-only">Search messages</span>
+            <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search messages" className="h-10 min-w-0 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+          </label>
+          <Button type="button" variant={filter === "unread" ? "default" : "outline"} onClick={() => setFilter(filter === "all" ? "unread" : "all")}>
+            <SlidersHorizontal className="mr-2 h-4 w-4" /> {filter === "unread" ? "Unread only" : "All messages"}
+          </Button>
+        </div>
       </div>
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
@@ -59,7 +80,7 @@ export default function AdminMessages() {
           </div>
         ) : messages && messages.length > 0 ? (
           <div className="divide-y divide-border">
-            {messages.map((msg) => (
+            {visibleMessages.map((msg) => (
               <div 
                 key={msg.id} 
                 onClick={() => handleOpenMessage(msg)}
