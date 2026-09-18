@@ -52,9 +52,8 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-white/[.08] bg-[#090a16]/75 backdrop-blur-xl">
         <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-5 md:px-8">
           <Link href="/" data-testid="link-brand-home" className="group flex items-center gap-3">
-            <span className="relative flex h-8 w-8 items-center justify-center rounded-lg border border-primary/50 bg-primary/10 font-mono text-sm text-primary shadow-[0_0_24px_rgba(104,167,255,.18)]">
-              <span className="absolute h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_10px_#68a7ff]" />
-              <span className="absolute inset-[5px] rounded border border-primary/40" />
+            <span className="relative flex size-9 items-center justify-center overflow-hidden rounded-lg border border-primary/40 bg-primary/10 shadow-[0_0_24px_rgba(104,167,255,.18)]">
+              <img src="/ajtech-logo-transparent.png" alt="" aria-hidden="true" className="size-full object-contain" />
             </span>
             <span className="font-semibold tracking-[-.04em] text-slate-100">aj<span className="text-primary">Tech</span><span className="ml-1 font-mono text-[10px] font-normal tracking-[.12em] text-slate-500">/STUDIO</span></span>
           </Link>

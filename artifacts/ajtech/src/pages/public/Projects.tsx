@@ -11,12 +11,15 @@ export default function Projects() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
   
-  const { data: projects, isLoading, isError } = useListProjects({});
+  const { data: projectsResponse, isLoading, isError } = useListProjects({});
   const { toast } = useToast();
+  const projects = Array.isArray(projectsResponse)
+    ? projectsResponse
+    : ((projectsResponse as { data?: typeof projectsResponse } | undefined)?.data ?? []);
 
-  const categories = ["All", ...Array.from(new Set(projects?.map(p => p.category) || []))];
+  const categories = ["All", ...Array.from(new Set(projects.map(p => p.category)))];
 
-  const filteredProjects = projects?.filter(project => {
+  const filteredProjects = projects.filter(project => {
     const matchesCategory = activeCategory === "All" || project.category === activeCategory;
     const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||

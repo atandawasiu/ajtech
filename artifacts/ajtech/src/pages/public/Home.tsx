@@ -8,7 +8,10 @@ function SkeletonProject() {
 }
 
 export default function Home() {
-  const { data: projects, isLoading, isError } = useListProjects({ featured: true });
+  const { data: projectsResponse, isLoading, isError } = useListProjects({ featured: true });
+  const projects = Array.isArray(projectsResponse)
+    ? projectsResponse
+    : ((projectsResponse as { data?: typeof projectsResponse } | undefined)?.data ?? []);
 
   return (
     <div className="overflow-hidden">
@@ -21,11 +24,11 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .55 }} className="eyebrow mb-7 flex items-center gap-3">
               <span className="h-px w-8 bg-primary" /> Independent engineering studio
             </motion.div>
-            <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08 }} className="max-w-4xl text-[3.8rem] font-semibold leading-[.94] tracking-[-.075em] text-slate-100 sm:text-7xl lg:text-[6.8rem]">
+            <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08 }} className="max-w-4xl text-[clamp(2.75rem,13vw,3.8rem)] font-semibold leading-[.94] tracking-[-.075em] text-slate-100 sm:text-7xl lg:text-[6.8rem]">
               Complex ideas.<br /><span className="text-gradient">Clear signal.</span>
             </motion.h1>
             <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .16 }} className="mt-8 max-w-xl text-base leading-7 text-slate-400 md:text-lg">
-              AJTech turns ambitious product ideas into polished, dependable digital experiences — from first system map to the last meaningful pixel.
+              ajTech turns ambitious product ideas into polished, dependable digital experiences — from first system map to the last meaningful pixel.
             </motion.p>
             <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .24 }} className="mt-10 flex flex-wrap items-center gap-4">
               <Link href="/projects" data-testid="link-hero-work" className="group flex items-center gap-3 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-[#090a16] transition-transform hover:-translate-y-0.5">

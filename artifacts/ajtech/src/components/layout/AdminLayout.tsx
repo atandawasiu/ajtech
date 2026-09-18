@@ -59,7 +59,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         </Link>
         {mobile && <button type="button" data-testid="button-close-admin-menu" onClick={() => setMobileOpen(false)} className="text-slate-500 hover:text-white"><X className="h-5 w-5" /></button>}
       </div>
-      <div className="px-5 pb-3 pt-6"><p className="eyebrow text-[9px] text-slate-600">Workspace</p><p className="mt-2 text-sm text-slate-300">AJTech Studio</p></div>
+      <div className="px-5 pb-3 pt-6"><p className="eyebrow text-[9px] text-slate-600">Workspace</p><p className="mt-2 text-sm text-slate-300">ajTech Studio</p></div>
       <nav aria-label="Admin navigation" className="flex-1 space-y-1 px-3">
         {navItems.map(({ href, icon: Icon, label }) => {
           const active = location === href || location.startsWith(`${href}/`);
