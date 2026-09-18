@@ -24,7 +24,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .55 }} className="eyebrow mb-7 flex items-center gap-3">
               <span className="h-px w-8 bg-primary" /> Independent engineering studio
             </motion.div>
-            <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08 }} className="max-w-4xl text-[3.8rem] font-semibold leading-[.94] tracking-[-.075em] text-slate-100 sm:text-7xl lg:text-[6.8rem]">
+            <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08 }} className="max-w-4xl text-[clamp(2.75rem,13vw,3.8rem)] font-semibold leading-[.94] tracking-[-.075em] text-slate-100 sm:text-7xl lg:text-[6.8rem]">
               Complex ideas.<br /><span className="text-gradient">Clear signal.</span>
             </motion.h1>
             <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .16 }} className="mt-8 max-w-xl text-base leading-7 text-slate-400 md:text-lg">
